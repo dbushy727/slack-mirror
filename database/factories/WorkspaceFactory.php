@@ -18,6 +18,7 @@ class WorkspaceFactory extends Factory
     {
         return [
             'name' => fake()->company(),
+            'slug' => fake()->unique()->slug(),
         ];
     }
 }
