@@ -1,11 +1,15 @@
 import WorkspaceLayout from "@/Layouts/WorkspaceLayout";
 import { Head } from "@inertiajs/react";
-
+import { useState } from "react";
+import clsx from "clsx";
+import Content from "./Content";
 export default function Workspace({
     workspace,
 }: {
     workspace: App.Data.WorkspaceData;
 }) {
+    const [activeChannelId, setActiveChannelId] = useState<number>();
+
     return (
         <WorkspaceLayout workspace={workspace}>
             <Head title={workspace.name} />
@@ -15,7 +19,16 @@ export default function Workspace({
                     <div>
                         <h2 className="text-xl">Channels</h2>
                         {workspace.channels.map((channel) => (
-                            <div key={channel.id}>
+                            <div
+                                key={channel.id}
+                                className={clsx(
+                                    activeChannelId === channel.id && [
+                                        "bg-emerald-800",
+                                        "text-white",
+                                    ]
+                                )}
+                                onClick={() => setActiveChannelId(channel.id)}
+                            >
                                 {channel.type === "private_channel" && (
                                     <span>[private]</span>
                                 )}{" "}
@@ -30,7 +43,9 @@ export default function Workspace({
                         ))}
                     </div>
                 </div>
-                <div>content</div>
+                <div>
+                    <Content channelId={activeChannelId} />
+                </div>
             </div>
         </WorkspaceLayout>
     );
