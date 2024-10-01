@@ -10,7 +10,7 @@ class WorkspaceController extends Controller
 {
     public function show(Request $request, Workspace $workspace)
     {
-        return Inertia::render('Workspace', [
+        return Inertia::render('Workspace/index', [
             'workspace' => $workspace->load('users'),
         ]);
     }
