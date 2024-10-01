@@ -48,7 +48,14 @@ class User extends Authenticatable
     public function workspaces()
     {
         return $this->belongsToMany(Workspace::class)
-            ->as('membership')
+            ->as('workspace_membership')
+            ->withTimestamps();
+    }
+
+    public function channels()
+    {
+        return $this->belongsToMany(Channel::class)
+            ->as('channel_membership')
             ->withTimestamps();
     }
 }

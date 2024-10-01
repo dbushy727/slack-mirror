@@ -13,8 +13,9 @@ class WorkspaceSeeder extends Seeder
      */
     public function run(): void
     {
-        Workspace::factory()->create(['name' => 'SlackMirror', 'slug' => 'slack-mirror'])
-            ->users()
-            ->attach(User::first(), ['role' => 'admin', 'joined_at' => now()]);
+        Workspace::factory()
+            ->hasAttached(User::first(), ['role' => 'admin', 'joined_at' => now()])
+            ->hasAttached(User::factory()->count(10)->create(), ['role' => 'member', 'joined_at' => now()])
+            ->create(['name' => 'SlackMirror', 'slug' => 'slack-mirror']);
     }
 }

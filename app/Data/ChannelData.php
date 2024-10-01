@@ -2,20 +2,17 @@
 
 namespace App\Data;
 
-use Illuminate\Support\Collection;
+use App\Enums\ChannelType;
 use Spatie\LaravelData\Data;
-use App\Data\UserData;
-use App\Data\ChannelData;
+use Illuminate\Support\Collection;
 
-class WorkspaceData extends Data
+class ChannelData extends Data
 {
     public function __construct(
         public int $id,
         public string $name,
-        public string $slug,
+        public ChannelType $type,
         /** @var Collection<int, UserData> */
         public Collection $users,
-        /** @var Collection<int, ChannelData> */
-        public Collection $channels,
     ) {}
 }

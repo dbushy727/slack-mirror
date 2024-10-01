@@ -1,4 +1,10 @@
 declare namespace App.Data {
+    export type ChannelData = {
+        id: number;
+        name: string;
+        type: App.Enums.ChannelType;
+        users: Array<App.Data.UserData>;
+    };
     export type UserData = {
         id: number;
         name: string;
@@ -9,5 +15,12 @@ declare namespace App.Data {
         name: string;
         slug: string;
         users: Array<App.Data.UserData>;
+        channels: Array<App.Data.ChannelData>;
     };
+}
+declare namespace App.Enums {
+    export type ChannelType =
+        | "direct_message"
+        | "public_channel"
+        | "private_channel";
 }

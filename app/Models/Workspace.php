@@ -12,7 +12,12 @@ class Workspace extends Model
     public function users()
     {
         return $this->belongsToMany(User::class)
-            ->as('membership')
+            ->as('workspace_membership')
             ->withTimestamps();
+    }
+
+    public function channels()
+    {
+        return $this->hasMany(Channel::class);
     }
 }
