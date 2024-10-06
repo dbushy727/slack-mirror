@@ -4,6 +4,13 @@ declare namespace App.Data {
         name: string;
         type: App.Enums.ChannelType;
         users: Array<App.Data.UserData>;
+        messages?: Array<App.Data.MessageData>;
+    };
+    export type MessageData = {
+        id: number;
+        content: string;
+        created_at: string;
+        from: App.Data.UserData;
     };
     export type UserData = {
         id: number;

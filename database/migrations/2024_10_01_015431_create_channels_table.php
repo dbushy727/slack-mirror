@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('workspace_id')->constrained();
             $table->string('name');
-            $table->string('type')->default('public');
+            $table->string('type')->default('public_channel');
             $table->timestamps();
 
             $table->unique(['workspace_id', 'name']);

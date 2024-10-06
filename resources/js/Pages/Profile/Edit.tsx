@@ -1,16 +1,16 @@
-import WorkspaceLayout from "@/Layouts/WorkspaceLayout";
 import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
 import DeleteUserForm from "./Partials/DeleteUserForm";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
+import AuthLayout from "@/Layouts/AuthLayout";
 
 export default function Edit({
     mustVerifyEmail,
     status,
 }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
     return (
-        <WorkspaceLayout>
+        <AuthLayout>
             <Head title="Profile" />
 
             <div className="py-12">
@@ -32,6 +32,6 @@ export default function Edit({
                     </div>
                 </div>
             </div>
-        </WorkspaceLayout>
+        </AuthLayout>
     );
 }

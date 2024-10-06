@@ -2,6 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Data\WorkspaceData;
+use App\Enums\ChannelType;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -30,12 +33,26 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+        $workspace = $request->route('workspace');
+
         return [
             ...parent::share($request),
-            'auth' => [
-                'user' => $request->user(),
-            ],
-            'ziggy' => fn () => [
+            'auth' => ['user' => $user],
+            'workspace' => $workspace ? WorkspaceData::from($workspace->load([
+                'users',
+                'channels' => function (HasMany $query) use ($user) {
+                    $query->where('type', ChannelType::public_channel)
+                        ->orWhere(function ($query2) use ($user) {
+                            $query2->where('type', ChannelType::private_channel)
+                                ->whereHas('users', function ($query3) use ($user) {
+                                    $query3->where('user_id', $user->id);
+                                });
+                        });
+                },
+                'channels.users'
+            ])) : null,
+            'ziggy' => fn() => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],

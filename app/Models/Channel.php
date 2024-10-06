@@ -14,6 +14,11 @@ class Channel extends Model
         'type' => ChannelType::class,
     ];
 
+    protected $fillable = [
+        'name',
+        'type',
+    ];
+
     public function workspace()
     {
         return $this->belongsTo(Workspace::class);
@@ -24,5 +29,10 @@ class Channel extends Model
         return $this->belongsToMany(User::class)
             ->as('channel_membership')
             ->withTimestamps();
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
     }
 }
