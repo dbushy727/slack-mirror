@@ -19,6 +19,7 @@ class ChannelController extends Controller
         return Inertia::render('Channel/index', [
             'channel' => ChannelData::from($channel->load([
                 'users',
+                'messages' => fn(HasMany $query) => $query->orderBy('created_at', 'desc')->limit(50)->with('from'),
                 'messages.from',
             ])),
         ]);

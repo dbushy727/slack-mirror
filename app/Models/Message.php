@@ -10,6 +10,12 @@ class Message extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        'from_user_id',
+        'channel_id',
+        'content',
+    ];
+
     public function from()
     {
         return $this->belongsTo(User::class, 'from_user_id');

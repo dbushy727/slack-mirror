@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Workspace;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class WorkspaceController extends Controller
 {

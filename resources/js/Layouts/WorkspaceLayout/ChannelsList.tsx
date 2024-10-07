@@ -2,7 +2,7 @@ import SecondaryButton from "@/Components/SecondaryButton";
 import { useState } from "react";
 import CreateChannelModal from "./CreateChannelModal";
 import { Link } from "@inertiajs/react";
-import clsx from "clsx";
+import { cn } from "@/utils";
 
 export default function ChannelsList({
     workspace,
@@ -37,7 +37,7 @@ export default function ChannelsList({
                 >
                     <div
                         key={channel.id}
-                        className={clsx(
+                        className={cn(
                             route().current("channels.show", {
                                 workspace: workspace.slug,
                                 channel: channel.id,
