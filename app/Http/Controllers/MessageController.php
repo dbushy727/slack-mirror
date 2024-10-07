@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSent;
 use App\Models\Message;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,7 @@ class MessageController extends Controller
             'content' => $request->content,
         ]);
 
+        MessageSent::dispatch($message);
         return redirect()->route('channels.show', [$message->channel->workspace, $message->channel]);
     }
 }

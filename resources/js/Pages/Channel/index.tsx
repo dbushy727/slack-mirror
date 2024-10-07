@@ -1,10 +1,26 @@
 import WorkspaceLayout from "@/Layouts/WorkspaceLayout/index";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import SendMessageBar from "./SendMessageBar";
 import Message from "./Message";
+import { router } from "@inertiajs/react";
 
 const Channel = ({ channel }: { channel: App.Data.ChannelData }) => {
     const messages = channel.messages || [];
+
+    useEffect(() => {
+        window.Echo.private(`channels.${channel.id}`).listen(
+            "MessageSent",
+            (e: any) => {
+                router.reload();
+            }
+        );
+
+        return () => {
+            window.Echo.private(`channels.${channel.id}`).stopListening(
+                "MessageSent"
+            );
+        };
+    }, []);
 
     const messageListRef = useRef<HTMLDivElement>(null);
 

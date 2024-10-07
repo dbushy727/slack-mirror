@@ -3,7 +3,7 @@ import SecondaryButton from "@/Components/SecondaryButton";
 import { cn } from "@/utils";
 import { PaperAirplaneIcon } from "@heroicons/react/16/solid";
 import { useForm, usePage } from "@inertiajs/react";
-import { BaseSyntheticEvent } from "react";
+import { BaseSyntheticEvent, useRef } from "react";
 
 export default function SendMessageBar({
     channel,
@@ -17,6 +17,8 @@ export default function SendMessageBar({
     const {
         auth: { user },
     } = usePage().props;
+
+    const messageContentRef = useRef<HTMLSpanElement>(null);
 
     const { data, setData, post, reset, errors } = useForm({
         content: "",
@@ -33,6 +35,9 @@ export default function SendMessageBar({
                 onSuccess: () => {
                     onSuccess?.();
                     reset();
+                    if (messageContentRef.current) {
+                        messageContentRef.current.textContent = "";
+                    }
                 },
             }
         );
@@ -49,6 +54,7 @@ export default function SendMessageBar({
                 <div className="flex flex-row items-center gap-2 pr-2">
                     <div className="flex-grow flex flex-row relative rounded-md border border-gray-300 shadow-sm p-4">
                         <span
+                            ref={messageContentRef}
                             className="textarea outline-none block w-full empty:before:content-['abc'] empty:before:text-gray-500 min-h-14 max-h-32 overflow-y-scroll"
                             role="textbox"
                             contentEditable
